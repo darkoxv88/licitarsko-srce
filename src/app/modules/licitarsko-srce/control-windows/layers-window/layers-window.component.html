@@ -1,0 +1,94 @@
+<mat-divider></mat-divider>
+
+<div class="stick-container" style="max-height: 145px; overflow: auto; margin-bottom: 5px; margin-top: 5px;">
+  <div class="w-100 bg-color-main-2 all-options-container">
+    <div class="app-spacer"></div>
+    <div>
+      <button mat-icon-button (click)="newLayer()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+  </div>
+  
+  <div class="w-100 bg-color-main-2" *ngIf="layerListService.isSelected">
+    
+    <div style="padding-bottom: 5px;"></div>
+    <mat-divider></mat-divider>
+    <div style="padding-top: 5px;"></div>
+
+    <div class="w-100 all-options-container">
+      <p>Layer for tool: {{ layerListService.getSelectedLayer().drawData.tool }}</p>
+    </div>
+
+    <div class="w-100 all-options-container">
+      <mat-form-field>
+        <mat-label>Layer name</mat-label>
+        <input matInput type="text" name="layerName" [(ngModel)]="layerListService.getSelectedLayer().name">
+      </mat-form-field>
+    </div>
+
+    <div class="w-100 all-options-container" style="margin-top: 0.5rem">
+      Transparency:
+      <mat-slider 
+        style="margin-left: 10px; width: 100px;" 
+        thumbLabel tickInterval="1000" step="1" min="0" max="255" aria-label="units"
+        [(ngModel)]="layerListService.getSelectedLayer().drawData.transparency"
+      >
+      </mat-slider>
+    </div>
+
+
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<mat-radio-group [ngModel]="layerListService.selectedIndex">
+  <div class="w-100" style="max-height: 300px; overflow: auto;">
+    <div cdkDropList class="layer-box" border-invert (cdkDropListDropped)="onDrop($event)" style="overflow: auto;">
+      <div class="layer-box bg-color-main-2" *ngFor="let item of layerListService.layerList; let i = index;" cdkDrag>
+  
+        <div class="box-placeholder bg-color-main-2" *cdkDragPlaceholder border-invert></div>
+  
+        <div class="box-inner bg-color-main-2">
+  
+          <div>
+            <mat-radio-button [value]="invertIndex(i)" style="margin-left: 0.75rem;"
+              color="primary" (click)="layerListService.selectLayer(invertIndex(i))"
+              [checked]="invertIndex(i) === layerListService.selectedIndex"
+            >
+            </mat-radio-button>
+          </div>
+  
+          <div [matTooltip]="layerListService.layerList[invertIndex(i)].name">
+            {{ invertIndex(i) }}
+          </div>
+  
+          <div class="app-spacer"></div>
+  
+          <div class="window-handle" cdkDragHandle>
+            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+              <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+          </div>
+  
+          <div>
+            <button mat-icon-button (click)="layerListService.layerList[invertIndex(i)].show = !layerListService.layerList[invertIndex(i)].show">
+              <i *ngIf="layerListService.layerList[invertIndex(i)].show == true" class="far fa-eye"></i>
+              <i *ngIf="layerListService.layerList[invertIndex(i)].show == false" class="far fa-eye-slash"></i>
+            </button>
+          </div>
+
+          <div *ngIf="invertIndex(i) !== 0">
+            <button mat-icon-button (click)="layerListService.delete(invertIndex(i))">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          
+        </div>
+  
+      </div>
+    </div>
+  </div>
+</mat-radio-group>

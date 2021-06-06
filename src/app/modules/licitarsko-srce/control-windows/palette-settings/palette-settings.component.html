@@ -1,0 +1,40 @@
+<div>
+  <mat-form-field class="local-input-field">
+    <mat-label>Fill color</mat-label>
+    <input matInput type="color" name="fillColor" [(ngModel)]="paletteSettingsService.fill">
+  </mat-form-field>
+  <mat-form-field class="local-input-field">
+    <mat-label>Stroke color</mat-label>
+    <input matInput type="color" name="strokeColor" [(ngModel)]="paletteSettingsService.stroke">
+  </mat-form-field>
+
+  <div style="text-align: left;">
+    <mat-button-toggle-group #selectionGroup="matButtonToggleGroup" value="fill">
+      <mat-button-toggle value="fill" (click)="setFocus('fill')">
+        Fill
+      </mat-button-toggle>
+      <mat-button-toggle value="stroke" aria-label="Text align center" (click)="setFocus('stroke')">
+        Stroke
+      </mat-button-toggle>
+      <mat-button-toggle value="none" aria-label="Text align center" (click)="setFocus('none')">
+        None
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div style="text-align: left; width: 100%; margin-top: 1rem;">
+    <button mat-stroked-button (click)="addToList()">Add color</button>
+  </div>
+
+  <div style="text-align: left; width: 100%; padding: 2px; margin-top: 1rem;" class="app-border-s-1" border-invert>
+    <div 
+      *ngFor="let item of paletteSettingsService.colorListArray" style="margin: 1px;"
+      class="show-color" border-invert [ngClass]="{'app-border-s-1': item === selected}"
+      [ngStyle]="{'background-color': item}"
+      (click)="onSelect(item)"
+      (dblclick)="setField(item)"
+    >
+    </div>
+  </div>
+
+</div>

@@ -1,1 +1,377 @@
-/* You can add global styles to this file, and also import other style files */
+@import './app/styles/fonts/google/google-fonts.scss';
+@import '~material-design-icons/iconfont/material-icons.css';
+@import './app/styles/fonts/font-awesome/font-awesome.scss';
+@import './app/styles/breakpoints.scss';
+@import './app/styles/bootstrap.scss';
+@import '~@angular/material/theming';
+
+@include mat-core();
+@include loadBootstrapGrid();
+@include loadBootstrapHelpers();
+
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0;
+}
+
+pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  [font-base] {
+    font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif !important;
+  }
+
+  [app-font-title] {
+    font: 400 20px/24px Roboto, "Helvetica Neue", sans-serif !important;
+  }
+
+  [app-font-subtitle] {
+    font: 400 16px/24px Roboto, "Helvetica Neue", sans-serif !important;
+  }
+}
+
+[entry-point] {
+  width: 100%;
+  height: 100%;
+  display: block; 
+}
+
+[hidden] {
+  display: none;
+}
+
+[center-align] {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.app-sm {
+  width: 100%;
+  max-width: $sm;
+}
+
+.app-md {
+  width: 100%;
+  max-width: $md;
+}
+
+.app-lg {
+  width: 100%;
+  max-width: $lg;
+}
+
+.app-xl {
+  width: 100%;
+  max-width: $xl;
+}
+
+.app-xxl {
+  width: 100%;
+  max-width: $xxl;
+}
+
+
+
+
+@mixin createTheme($cp, $ca, $cw, $set-dark-theme: false) {
+  $primary: mat-palette($cp, 500, 400, 700);
+  $accent: mat-palette($ca);
+  $warn: mat-palette($cw);
+  
+  $theme: null;
+  $bg: null;
+  $bg2: null;
+  $bg-text: null;
+  $bg-accent: null;
+  $bg-invert: null;
+  $bg-text-invert: null;
+  $theme-shade: 500;
+
+  @if $set-dark-theme {
+
+    $theme: mat-dark-theme($primary, $accent, $warn);
+
+    $bg: #303030;
+    $bg2: #424242;
+    $bg-text: white;
+    $bg-accent: lighten($bg, 5);
+  
+    $bg-invert: white;
+    $bg-text-invert: rgba(black, 0.87);
+
+    $theme-shade: 400;
+    
+  } @else {
+
+    $theme: mat-light-theme($primary, $accent, $warn);
+
+    $bg: #ffffff;
+    $bg2: #ffffff;
+    $bg-text: rgba(black, 0.87);
+    $bg-accent: darken($bg, 5);
+
+    $bg-invert: #303030;
+    $bg-text-invert: white;
+
+    $theme-shade: 700;
+
+  }
+
+  @include angular-material-theme($theme);
+
+  background-color: $bg;
+
+  @if $set-dark-theme {
+
+    input {
+      color: white;
+    }
+  
+    mat-form-field {
+      button {
+        mat-icon {
+          color: white;
+        }
+      }
+    }
+
+  } @else {
+
+    .mat-drawer.mat-drawer-push {
+      background-color: darken($bg, 14);
+    }
+
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: map-get($ca, $theme-shade) #00000000;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #00000000;
+    width: 8px;
+    height: 8px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: map-get($ca, 500);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: map-get($ca, $theme-shade);
+  }
+
+  .bg-color-main {
+    background-color: $bg;
+    color: $bg-text;
+  }
+
+  .bg-color-main-2 {
+    background-color: $bg2;
+    color: $bg-text;
+  }
+
+  .bg-color-primary {
+    background-color: map-get($cp, 500);
+  }
+
+  .text-color-primary {
+    color: map-get(map-get($cp, contrast), 500);
+  }
+
+  .bg-color-accent {
+    background-color: map-get($ca, 500);
+  }
+
+  [border-invert] {
+    border-color: $bg-invert;
+  }
+
+  [border-primary] {
+    border-color: map-get($cp, 500);
+  }
+
+  [border-accent] {
+    border-color: map-get($ca, 500);
+  }
+
+  [color-invert] {
+    background-color: $bg-invert;
+    color: $bg-text-invert;
+  }
+
+  [color-confirmation] {
+    background-color: #4caf50;
+    color: rgba(black, 0.87);
+  }
+
+  .mat-tooltip {
+    background: rgba(97, 97, 97, 1) !important;
+  }
+
+  .mat-expansion-panel-header[extra-options][aria-disabled=true] {
+    color: $bg-text;
+  }
+
+  .app-mat-snackbar-neutral {
+    background-color: $bg-invert;
+    color: $bg-text-invert;
+
+    button {
+      background-color: map-get($cp, 500);
+      color: map-get(map-get($cp, contrast), 500);
+    }
+  }
+
+  .app-mat-snackbar-error {
+    background-color: map-get($cw, 500);
+    color: map-get(map-get($cw, contrast), 500);
+    
+    button {
+      background-color: $bg;
+      color: $bg-text;
+    }
+  }
+
+  .app-mat-snackbar-primary {
+    background-color: map-get($cp, 500);
+    color: map-get(map-get($cp, contrast), 500);
+
+    button {
+      background-color: map-get($ca, 500);
+      color: map-get(map-get($ca, contrast), 500);
+    }
+  }
+}
+
+
+
+
+
+.light-theme-a {
+  @include createTheme($mat-pink, $mat-blue-grey, $mat-red, false);
+}
+
+.dark-theme-a {
+  @include createTheme($mat-blue-grey, $mat-pink, $mat-red, true);
+}
+
+
+
+.light-theme-b {
+  @include createTheme($mat-purple, $mat-lime, $mat-red, false);
+}
+
+.dark-theme-b {
+  @include createTheme($mat-lime, $mat-purple, $mat-red, true);
+}
+
+
+
+.light-theme-c {
+  @include createTheme($mat-deep-orange, $mat-blue, $mat-red, false);
+}
+
+.dark-theme-c {
+  @include createTheme($mat-blue, $mat-deep-orange, $mat-red, true);
+}
+
+
+
+
+
+.app-material-override {
+  mat-dialog-container {
+    padding: 0px;
+  }
+
+  mat-drawer-container[custom-override] {
+    mat-drawer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: initial !important;
+      margin-right: 0px !important;
+    }
+  }
+}
+
+
+
+.app-container {
+  height: 100%; 
+  width: 100%; 
+  display: flex; 
+  flex-direction: column;
+
+  .app-screen {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    .app-router {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      margin-left: 2px; 
+      margin-right: 2px;
+    }
+  }
+}
+
+.app-spacer {
+  flex: 1 1 auto;
+}
+
+.app-hover:hover {
+  cursor: pointer;
+}
+
+.app-mat-tab-inline {
+  nav {
+    span {
+      display: inline-flex;
+      vertical-align: middle;
+      justify-content: center;
+      align-items: center;
+      white-space: nowrap;
+    }
+  }
+}
+
+.app-img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.app-border-s-1 {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.app-setup-drag {
+  position: relative;
+}

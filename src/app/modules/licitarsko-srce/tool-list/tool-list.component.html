@@ -1,0 +1,48 @@
+<div>
+  <mat-list>
+    <mat-divider class="local-divider"></mat-divider>
+    
+    <div desc="Passive" hidden></div>
+
+    <button 
+    mat-icon-button matTooltip="None" [matTooltipPosition]="'right'"
+    (click)="selectedToolService.selectTool('testTool');"
+    [color]="(selectedToolService.selected === 'testTool') ? 'primary' : null"
+    >
+      <mat-icon>remove_circle_outline</mat-icon>
+    </button>
+
+    <button 
+    mat-icon-button matTooltip="Move tool" [matTooltipPosition]="'right'"
+    (click)="selectedToolService.selectTool('moveTool');"
+    [color]="(selectedToolService.selected === 'moveTool') ? 'primary' : null"
+    >
+      <mat-icon>near_me</mat-icon>
+    </button>
+
+    <button 
+      mat-icon-button matTooltip="Color picker" [matTooltipPosition]="'right'"
+      (click)="selectedToolService.selectTool('colorPickerTool');"
+      [color]="(selectedToolService.selected === 'colorPickerTool') ? 'primary' : null"
+    >
+      <mat-icon>colorize</mat-icon>
+    </button>
+
+    <mat-divider class="local-divider"></mat-divider>
+
+    <div desc="Active" hidden></div>
+
+    <div>
+
+      <button 
+      mat-icon-button matTooltip="Pencil tool" [matTooltipPosition]="'right'"
+      (click)="selectedToolService.selectTool('pencileTool');"
+      [color]="(selectedToolService.selected === 'pencileTool') ? 'primary' : null"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    </div>
+
+  </mat-list>
+</div>

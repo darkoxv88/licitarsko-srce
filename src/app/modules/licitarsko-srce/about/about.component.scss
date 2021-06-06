@@ -1,0 +1,40 @@
+.local-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+
+	.local-container-inner {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: auto;
+    overflow: auto;
+	}
+} 
+
+.local-view-screen {
+  margin: 1.5rem auto 1.5rem auto;
+  width: 100%;
+  max-width: 501px;
+}
+
+.header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.author {
+	align-items: center;
+	margin: 0 0 12px;
+}
+
+p {
+	margin: 0px;
+}
+
+i {
+	font-size: 24px;
+}

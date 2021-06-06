@@ -1,0 +1,19 @@
+@import './../../../styles/breakpoints.scss';
+
+.input-size {
+  min-width: 280px;
+}
+
+@media screen and (max-width: $sm) { 
+  .input-size {
+    min-width: 150px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: $sm) { 
+  .input-name {
+    min-width: 100px;
+    width: 100%;
+  }
+}

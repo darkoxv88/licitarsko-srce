@@ -1,0 +1,26 @@
+<mat-list style="padding-bottom: 8px;">
+  <mat-divider></mat-divider>
+</mat-list>
+
+<div style="width: 100%; text-align: left; padding-left: 16px"><p style="margin: 0px;">Selected: {{ assetHandlerService.getSelectedName() }}</p></div>
+
+<div style="width: 100%; height: auto; overflow: auto;">
+  <mat-list>
+    <mat-divider></mat-divider>
+    <mat-divider></mat-divider>
+    <div *ngFor="let item of assetHandlerService.list; let indexOfelement = index;" style="width: 100%;">
+      <mat-list-item>
+        <button mat-button (click)="select(indexOfelement)">
+          <div class="asset-container">
+            <div class="img-container">
+              <img src="{{item.url}}">
+            </div>
+            <div><p style="margin: 0px;">{{ item.name }}</p></div>
+          </div>
+        </button>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+    </div>
+  </mat-list>
+</div>

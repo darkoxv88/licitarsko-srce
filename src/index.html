@@ -1,13 +1,66 @@
 <!doctype html>
+
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>LicitarskoSrce</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+
+  <head>
+
+    <meta charset="utf-8">
+    <title>LicitarskoSrce</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  </head>
+
+  <body class="mat-typography app-material-override">
+
+    <app-root entry-point></app-root>
+
+    <style>
+      main {
+        display: none;
+      }
+
+      pre.extra[description] {
+        background-color: white;
+        color: black;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        margin: 0px;
+        overflow: auto;
+      }
+
+      pre[hidden] {
+        display: none;
+      }
+    </style>
+
+    <pre id="app-3rdPartyLicenses" class="extra" description="Third party licenses" loaded="false" hidden>...loading licenses</pre>
+
+    <div id="app-utility" style="display: none;" hidden></div>
+
+    <pre id="app-dev-resources" class="extra" description="Resources" dev-tool hidden>
+      p5.js
+      https://indepth.dev/posts/1083/creating-a-sketchpad-with-angular-and-p5js
+      https://p5js.org/examples/image-transparency.html
+      https://www.geeksforgeeks.org/p5-js-image-resize-method/#:~:text=The%20resize%20%28%29%20method%20of%20p5.Image%20in%20p5.js,of%20the%20values%20of%20the%20width%20and%20height.
+      https://p5js.org/reference/#/p5/tint
+
+      Prod:
+      run 'ng build --base-href "/folder-name/" --prod'
+    </pre>
+
+    <div id="app-trash" style="display: none;" dev-tool hidden></div>
+
+    <div></div>
+
+  </body>
+
 </html>

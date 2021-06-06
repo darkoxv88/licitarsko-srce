@@ -1,0 +1,210 @@
+<div class="app-container">
+
+  <div class="toolbar-container">
+    <mat-toolbar color="primary" style="overflow: hidden;">
+      
+      <span class="toolbar-spacer-mobile"></span>
+
+      <button mat-icon-button  matTooltip="File" [matTooltipPosition]="'below'" [matMenuTriggerFor]="toolbarFile">
+        <mat-icon>folder</mat-icon>
+      </button>
+
+      <span class="toolbar-spacer-mobile"></span>
+
+      <button mat-icon-button matTooltip="Window" [matTooltipPosition]="'below'" [matMenuTriggerFor]="toolbarWindow">
+        <mat-icon>list</mat-icon>
+      </button>
+
+      <span class="toolbar-spacer-mobile"></span>
+
+      <button mat-icon-button matTooltip="About page" [matTooltipPosition]="'below'" (click)="navigate('About')">
+        <mat-icon>info</mat-icon>
+      </button>
+
+      <span class="toolbar-spacer-mobile"></span>
+
+      <span class="toolbar-spacer-desktop"></span>
+
+      <button mat-icon-button matTooltip="Settings" [matTooltipPosition]="'below'" [matMenuTriggerFor]="toolbarSettings">
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      <span class="toolbar-spacer"></span>
+
+    </mat-toolbar>
+
+
+
+    <mat-menu #toolbarFile="matMenu">
+
+      <button mat-menu-item (click)="requestNew()">
+        <mat-icon>folder_open</mat-icon>
+        <span>new</span>
+      </button>
+
+      <button mat-menu-item (click)="appLoadProjectFileInput.click()">
+        <mat-icon>file_upload</mat-icon>
+        <span>Open</span>
+      </button>
+
+      <button mat-menu-item (click)="saveProject()">
+        <mat-icon>save</mat-icon>
+        <span>Save</span>
+      </button>
+
+      <button mat-menu-item (click)="exportImg()">
+        <mat-icon>image</mat-icon>
+        <span>Export</span>
+      </button>
+
+      <button mat-menu-item (click)="importAsset()">
+        <mat-icon>cloud_upload</mat-icon>
+        <span>Upload asset</span>
+      </button>
+    
+    </mat-menu>
+
+    <mat-menu #toolbarWindow="matMenu">
+
+      <button *ngFor="let item of windowControllerService?.list" mat-menu-item (click)="item.show = !item?.show">
+        {{ item.name }}
+      </button>
+    
+    </mat-menu>
+
+    <mat-menu #toolbarSettings="matMenu">
+      <button 
+      *ngIf="cookieHandlerService.isAllowed()" 
+      (click)="appThemeService.swapTheme(); cookieHandlerService.setCookie('themeType', appThemeService.type)" 
+      mat-menu-item
+      >
+        <mat-icon>invert_colors</mat-icon>
+        <span>Invert theme</span>
+      </button>
+
+      <button *ngIf="cookieHandlerService.isAllowed()" [matMenuTriggerFor]="submenuThemes" mat-menu-item>
+        <span>Select theme</span>
+      </button>
+
+      <button *ngIf="!cookieHandlerService.isAllowed()" (click)="cookieHandlerService.allow()" mat-menu-item>
+        <span>Allow cookies</span>
+      </button>
+    
+    </mat-menu>
+
+    <div>
+      <mat-menu #submenuThemes="matMenu">
+
+        <button *ngFor="let item of appThemeService.list" (click)="appThemeService.setTheme(item); cookieHandlerService.setCookie('themeName', item)" mat-menu-item>
+          <span>{{ item }}</span>
+        </button>
+      
+      </mat-menu>
+    </div>
+
+  </div>
+
+
+  <mat-drawer-container custom-override [hasBackdrop]="false" style="flex-grow: 1;" autosize [hasBackdrop]="false">
+
+    <mat-drawer [disableClose]="true" #sideMenu [mode]="'push'" [opened]="true" class="drawer-container">
+      <div style="width: 100%; height: 100%; overflow: hidden;">
+        <div style="width: 100%; max-width: 100%; overflow: auto;">
+          <app-tool-list></app-tool-list>
+        </div>
+      </div>
+    </mat-drawer>
+
+    
+
+    <div *ngIf="!(currentProjectService?.active); then createProject else currentProject"></div> 
+
+    <ng-template #createProject>
+      <div class="form-container">
+        <div class="form-container-inner">
+          <div class="form-view-screen">
+
+            <mat-card [class.mat-elevation-z7]="true" class="app-border-s-1" border-primary>
+              <mat-card-content>
+            
+                <mat-card-title style="text-align: center;">New project</mat-card-title>
+            
+                <form [formGroup]="newProjectForm" (ngSubmit)="onCreateProject();">
+            
+                  <div style="text-align: center;">
+                    
+                    <mat-form-field class="local-input-field">
+                      <mat-label>Project name</mat-label>
+                      <input matInput required type="text" name="projectName" formControlName="projectName" tabindex="1">
+                      <button 
+                        mat-button 
+                        *ngIf="newProjectForm?.value['projectName']" 
+                        tabindex="-1" 
+                        type="button" 
+                        matSuffix 
+                        mat-icon-button 
+                        aria-label="Clear" 
+                        (click)="newProjectForm?.controls['projectName'].patchValue('')"
+                      >
+                        <mat-icon>close</mat-icon>
+                      </button>
+                      <mat-error *ngIf="ngIfEx.ifIn('required', newProjectForm.controls['projectName']?.errors)">
+                        This field is required.
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="local-input-field">
+                      <mat-label>Canvas size</mat-label>
+                      <input matInput required type="number" name="projectSize" formControlName="projectSize" tabindex="2">
+                      <button 
+                        mat-button 
+                        *ngIf="newProjectForm?.value['projectSize']" 
+                        tabindex="-1" 
+                        type="button" 
+                        matSuffix 
+                        mat-icon-button 
+                        aria-label="Clear" 
+                        (click)="newProjectForm?.controls['projectSize'].patchValue('')"
+                      >
+                        <mat-icon>close</mat-icon>
+                      </button>
+                      <mat-error *ngIf="ngIfEx.ifIn('required', newProjectForm.controls['projectSize']?.errors)">
+                        This field is required.
+                      </mat-error>
+                    </mat-form-field>
+
+                  </div>
+        
+                  <div style="width: 100%; margin-top: 16px;"></div>
+            
+                  <div style="text-align: center;">
+                    <button type="submit" mat-raised-button color="primary" [disabled]="!newProjectForm?.valid">Create</button>
+                  </div>
+            
+                </form>
+            
+              </mat-card-content>
+            </mat-card>
+            
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #currentProject>
+      <div class="app-screen app-setup-drag">
+        <div class="app-router app-drag-control">
+
+          <app-canvas-container></app-canvas-container>
+
+          <app-control-windows></app-control-windows>
+
+        </div>
+      </div>
+    </ng-template>
+
+  </mat-drawer-container>
+
+</div>
+
+<input #appLoadProjectFileInput type="file" accept=".txt" (change)="loadProject($event)" hidden>

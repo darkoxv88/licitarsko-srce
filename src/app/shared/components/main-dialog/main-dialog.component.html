@@ -1,0 +1,20 @@
+<div class="dialog-head bg-color-primary">
+  <mat-icon class="text-color-primary">{{ data.icon }}</mat-icon>
+  <h2 class="text-color-primary" style="padding-left: 2px; padding-right: 8px">{{ data.name }}</h2>
+  <span class="app-spacer"></span>
+</div>
+
+<mat-dialog-content class="dialog-content" style="text-align: center; margin: 0px 0px 12px 0px;">
+
+  <div style="width: 210px;"></div>
+
+  <ng-template appDynamicComponent></ng-template>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="center" style="margin: 0px 0px 6px 0px;">
+  <button mat-raised-button color="primary" [mat-dialog-close]='true'>Close</button>
+  <button mat-raised-button color="primary" *ngIf="this.showAction() === true" (click)="onAction()" [disabled]="disableAction()">
+    {{ data.action }}
+  </button>
+</mat-dialog-actions>

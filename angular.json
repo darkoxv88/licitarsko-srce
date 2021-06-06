@@ -30,7 +30,14 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/scripts/environments/environment.js",
+              "src/scripts/libs/p5.min.js",
+              "src/scripts/dom-handler.js",
+              "src/scripts/utility.js",
+              "src/scripts/main.js",
+              "src/scripts/startup.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -50,13 +57,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "35mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "14kb"
                 }
               ]
             }

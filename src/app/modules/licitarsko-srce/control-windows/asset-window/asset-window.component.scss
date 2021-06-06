@@ -1,0 +1,30 @@
+::ng-deep {
+  .mat-list-item-content {
+    padding: 0px !important;
+  }
+}
+
+button {
+  width: 100%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.asset-container {
+  width: 100%; 
+  display: inline-flex; 
+  align-items: center;
+}
+
+.img-container {
+  display: flex; 
+  margin-right: 0.25rem;
+
+  img {
+    width: auto; 
+    height: 36px; 
+    max-height: 36px; 
+    align-items: center;
+  }
+}
+

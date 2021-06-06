@@ -1,0 +1,13 @@
+.dialog-head {
+  display: flex;
+  width: 100%;
+  padding: 12px 8px;
+  margin-bottom: 8px;
+  justify-content: center;
+  align-items: center;
+  
+  h2 {
+    margin: 0px;
+    word-wrap: break-word;
+  }
+}

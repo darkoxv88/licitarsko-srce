@@ -1,0 +1,43 @@
+.local-container {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  display: flex; 
+  width: 100%; 
+  margin: 0.5rem;
+
+  span.space {
+    margin-right: 0.5rem;
+  }
+}
+
+.local-border-left-s-1 {
+  border-left-width: 1px;
+  border-left-style: solid;
+}
+
+.canvas-main-container {
+  height: 100%;
+  overflow: auto;
+
+  .controller {
+    width: fit-content;
+    height: fit-content;
+    transform: scale(1);
+    transform-origin: center 0px;
+    animation: normal;
+  }
+}
+
+.placeholder {
+  height: 600px;
+  width: 600px;
+  background-color: aqua;
+}
+
+.controller:focus {
+  outline: none !important;
+  border-width: 0px !important;
+}

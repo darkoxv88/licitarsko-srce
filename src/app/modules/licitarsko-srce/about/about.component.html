@@ -1,0 +1,54 @@
+<div class="local-container">
+  <div class="local-container-inner">
+    <div class="local-view-screen">
+
+      <mat-card style="text-align: left;" [class.mat-elevation-z10]="true" class="app-border-s-2" border-primary>
+
+        <mat-card-content>
+      
+          <p app-font-subtitle style="margin-bottom: 11px;">Authors:</p>
+
+          <div class="d-flex author">
+            <mat-icon>chevron_right</mat-icon>
+            <p style="display: flex">
+              Darko Petrović
+            </p>
+          </div>
+
+          <div class="d-flex" style="align-items: center; margin: 0 0 12px;">
+            <button mat-icon-button (click)="socialMedia('https://www.facebook.com/WitchkingOfAngmarr')">
+              <i class="fab fa-facebook"></i>
+            </button>
+            <button mat-icon-button (click)="socialMedia('https://github.com/darkoxv88')">
+              <i class="fab fa-github"></i>
+            </button>
+          </div>
+
+
+
+          <div class="d-flex author">
+            <mat-icon>chevron_right</mat-icon>
+            <p style="display: flex">
+              Matija Čić
+            </p>
+          </div>
+
+          <div class="d-flex" style="align-items: center; margin: 0 0 12px;">
+            <button mat-icon-button (click)="socialMedia('https://www.facebook.com/matija.cic')">
+              <i class="fab fa-facebook"></i>
+            </button>
+            <button mat-icon-button (click)="socialMedia('https://coreofcreation.bandcamp.com/')">
+              <mat-icon>music_note</mat-icon>
+            </button>
+          </div>
+      
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button [color]="'primary'" (click)="home()">Home</button>
+        </mat-card-actions>
+      </mat-card>
+      
+    </div>
+  </div>
+</div>
