@@ -17,6 +17,7 @@ import { LayersWindowComponent } from './control-windows/layers-window/layers-wi
 import { AssetImporterComponent } from './asset-importer/asset-importer.component';
 import { AssetWindowComponent } from './control-windows/asset-window/asset-window.component';
 import { LayersWindowNewLayerComponent } from './control-windows/layers-window/layers-window-new-layer/layers-window-new-layer.component';
+import { SelectedLayerWindowComponent } from './control-windows/selected-layer-window/selected-layer-window.component';
 import { ToolSettingsHolderComponent } from './control-windows/tool-settings-holder/tool-settings-holder.component';
 import { MoveToolComponent } from './tool-list/move-tool/move-tool.component';
 import { PencileToolComponent } from './tool-list/pencile-tool/pencile-tool.component';
@@ -42,6 +43,7 @@ import { PencileToolComponent } from './tool-list/pencile-tool/pencile-tool.comp
     AssetImporterComponent,
     AssetWindowComponent,
     LayersWindowNewLayerComponent,
+    SelectedLayerWindowComponent,
     ToolSettingsHolderComponent,
     MoveToolComponent,
     PencileToolComponent,
@@ -58,6 +60,7 @@ import { PencileToolComponent } from './tool-list/pencile-tool/pencile-tool.comp
     AssetImporterComponent,
     AssetWindowComponent,
     LayersWindowNewLayerComponent,
+    SelectedLayerWindowComponent,
     ToolSettingsHolderComponent,
     MoveToolComponent,
     PencileToolComponent,

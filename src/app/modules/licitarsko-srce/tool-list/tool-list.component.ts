@@ -10,10 +10,12 @@ import { LayerListService } from 'src/app/core/p5/layer-list.service';
 })
 export class ToolListComponent implements OnInit, OnDestroy {
 
+  public selectedGroup: number;
+
   constructor(
       public layerListService: LayerListService,
       public selectedToolService: SelectedToolService) {
-        
+    this.selectedGroup = 0;    
   }
 
   public ngOnInit(): void {

@@ -25,6 +25,7 @@ import { SaveProjectService } from './core/project/save-project.service';
 import { LoadProjectService } from './core/project/load-project.service';
 import { WindowControllerService } from './core/data-transfers/window-controller.service';
 import { CurrentProjectService } from './core/data-transfers/current-project.service';
+import { P5DrawSemaphoreService } from './core/p5/p5-draw-semaphore.service';
 import { InitService } from './core/init.service';
 import { ToolListService } from './core/p5/tool-list.service';
 import { ToolHandlerService } from './core/p5/tool-handler.service';
@@ -33,6 +34,8 @@ import { TestToolService } from './core/p5/tools/test-tool.service';
 import { ColorPickerToolService } from './core/p5/tools/color-picker-tool.service';
 import { MoveToolService } from './core/p5/tools/move-tool.service';
 import { PencileToolService } from './core/p5/tools/pencil-tool.service';
+import { PlaceImageToolService } from './core/p5/tools/place-image-tool.service';
+import { PenToolService } from './core/p5/tools/pen-tool.service';
 
 @NgModule({
   declarations: [
@@ -71,6 +74,9 @@ import { PencileToolService } from './core/p5/tools/pencil-tool.service';
     ColorPickerToolService,
     MoveToolService,
     PencileToolService,
+    P5DrawSemaphoreService,
+    PlaceImageToolService,
+    PenToolService,
   ],
   bootstrap: [AppComponent]
 })

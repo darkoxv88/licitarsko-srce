@@ -134,10 +134,8 @@ export class LicitarskoSrceComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     this.matDialogGeneratorService.openActionDialog<AssetImporterComponent>(
-      'Upload asset', 'cloud_upload', 'Done', 
-      (data: any, closeDialog: Function) => {
-        closeDialog();
-      }, 
+      'Upload asset', 'cloud_upload', '', 
+      () => { }, 
       AssetImporterComponent, null
     );
   }

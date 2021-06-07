@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { CurrentProjectService } from 'src/app/core/data-transfers/current-project.service';
 import { RandomGenerator } from 'src/app/utilities/random-generator';
 import { P5Service } from 'src/app/core/p5/p5.service';
+import { P5DrawSemaphoreService } from 'src/app/core/p5/p5-draw-semaphore.service';
 
 @Component({
   selector: 'app-canvas-container',
@@ -28,6 +29,7 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
   constructor(
       private renderer: Renderer2,
       private p5Service: P5Service,
+      private p5DrawSemaphoreService: P5DrawSemaphoreService,
       public currentProjectService: CurrentProjectService) {
     this.zoomRatio = 100;
     this.isKeyLocked = false; 
@@ -121,6 +123,8 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
 
   private keyupEvent = (ev: KeyboardEvent): void => {
     this.isKeyLocked = ev.shiftKey;
+
+    if (ev.key === 'r') this.p5DrawSemaphoreService.draw();
   }
 
   public setFocus(): void {
@@ -135,6 +139,18 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
   public onFocusLeaveEle(): void {
     this.focused = false;
     this.p5Service.disableInteraction();
+  }
+
+  public getHoverX(): number {
+    return this.p5Service.hx
+  }
+
+  public getHoverY(): number {
+    return this.p5Service.hy
+  }
+
+  public refresh(): void {
+    this.p5DrawSemaphoreService.draw();
   }
 
 }

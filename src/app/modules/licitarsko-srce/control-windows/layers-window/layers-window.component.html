@@ -17,26 +17,8 @@
     <div style="padding-top: 5px;"></div>
 
     <div class="w-100 all-options-container">
-      <p>Layer for tool: {{ layerListService.getSelectedLayer().drawData.tool }}</p>
+      <p>Layer for tool: {{ layerListService.getSelectedLayer().drawData.toolName }}</p>
     </div>
-
-    <div class="w-100 all-options-container">
-      <mat-form-field>
-        <mat-label>Layer name</mat-label>
-        <input matInput type="text" name="layerName" [(ngModel)]="layerListService.getSelectedLayer().name">
-      </mat-form-field>
-    </div>
-
-    <div class="w-100 all-options-container" style="margin-top: 0.5rem">
-      Transparency:
-      <mat-slider 
-        style="margin-left: 10px; width: 100px;" 
-        thumbLabel tickInterval="1000" step="1" min="0" max="255" aria-label="units"
-        [(ngModel)]="layerListService.getSelectedLayer().drawData.transparency"
-      >
-      </mat-slider>
-    </div>
-
 
   </div>
 </div>
@@ -74,14 +56,17 @@
           </div>
   
           <div>
-            <button mat-icon-button (click)="layerListService.layerList[invertIndex(i)].show = !layerListService.layerList[invertIndex(i)].show">
+            <button 
+              mat-icon-button 
+              (click)="layerListService.layerList[invertIndex(i)].show = !layerListService.layerList[invertIndex(i)].show; procDraw();"
+            >
               <i *ngIf="layerListService.layerList[invertIndex(i)].show == true" class="far fa-eye"></i>
               <i *ngIf="layerListService.layerList[invertIndex(i)].show == false" class="far fa-eye-slash"></i>
             </button>
           </div>
 
           <div *ngIf="invertIndex(i) !== 0">
-            <button mat-icon-button (click)="layerListService.delete(invertIndex(i))">
+            <button mat-icon-button (click)="layerListService.delete(invertIndex(i)); procDraw();">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

@@ -32,7 +32,7 @@ export class AssetImporterComponent implements IDialogComponentView<null, void> 
     });
     this.disableBtn = true;
     this.loading = false;
-    this.msg = '';
+    this.msg = null;
   }
 
   public nameValidator = (): ValidatorFn => {
@@ -47,27 +47,24 @@ export class AssetImporterComponent implements IDialogComponentView<null, void> 
 
   public disableAction(): boolean {
     if (!this.newAssetForm.value?.assetName) return true;
+
     return false;
   }
 
   public loadAsset(e: Event): void {
-    if (!e.target['files']) {
-      return;
-    }
+    if (!e.target['files']) return;
       
-    if (!e.target['files'][0]) {
-      return;
-    }
+    if (!e.target['files'][0]) return;
 
-    this.assetHandlerService.loadAsset(e.target['files'][0] as File, this.newAssetForm.value?.assetName, () => {
+    this.msg = '';
+
+    this.assetHandlerService.loadAsset(e.target['files'][0] as File, this.newAssetForm.value?.assetName, (name: string) => {
+      this.msg = 'Asset: ' + name + ' has been loaded!';
+
       this.newAssetForm.reset();
-    })
+    });
 
     e.target['value'] = '';
-  }
-
-  public onCreateAsset(): void {
-
   }
 
   public disable(): boolean { 

@@ -1,0 +1,82 @@
+<div class="w-100 bg-color-main-2" *ngIf="layerListService.isSelected">
+
+
+    
+  <div class="w-100 all-options-container">
+    <p>Layer for tool: {{ layerListService.getSelectedLayer().drawData.toolName }}</p>
+  </div>
+
+  <div class="w-100 all-options-container">
+    <mat-form-field>
+      <mat-label>Layer name</mat-label>
+      <input matInput type="text" name="layerName" [(ngModel)]="layerListService.getSelectedLayer().name">
+    </mat-form-field>
+  </div>
+
+  <div class="w-100 all-options-container" style="margin-top: 0.5rem">
+    Transparency:
+    <mat-slider 
+      style="margin-left: 10px; width: 100px;" 
+      thumbLabel tickInterval="1000" step="1" min="0" max="255" aria-label="units"
+      [(ngModel)]="layerListService.getSelectedLayer().drawData.transparency"
+      (change)="procDraw();"
+    >
+    </mat-slider>
+  </div>
+
+
+
+  <div *ngIf="layerListService.getSelectedLayer().drawData.tool == 'placeImageTool'">
+
+    <div class="w-100 all-options-container" style="margin-top: 0.5rem">
+      H:
+      <mat-slider 
+        style="margin-left: 10px; width: 100px;" 
+        thumbLabel tickInterval="1000" step="1" min="1" max="255" aria-label="units"
+        [(ngModel)]="layerListService.getSelectedLayer().drawData.details.placeImageTool.h"
+        (change)="procDraw();"
+      >
+      </mat-slider>
+    </div>
+
+    <div class="w-100 all-options-container" style="margin-top: 0.5rem">
+      S:
+      <mat-slider 
+        style="margin-left: 10px; width: 100px;" 
+        thumbLabel tickInterval="1000" step="1" min="1" max="255" aria-label="units"
+        [(ngModel)]="layerListService.getSelectedLayer().drawData.details.placeImageTool.s"
+        (change)="procDraw();"
+      >
+      </mat-slider>
+    </div>
+
+    <div class="w-100 all-options-container" style="margin-top: 0.5rem">
+      B:
+      <mat-slider 
+        style="margin-left: 10px; width: 100px;" 
+        thumbLabel tickInterval="1000" step="1" min="1" max="255" aria-label="units"
+        [(ngModel)]="layerListService.getSelectedLayer().drawData.details.placeImageTool.b"
+        (change)="procDraw();"
+      >
+      </mat-slider>
+    </div>
+
+    <div class="w-100 all-options-container" style="margin-top: 0.5rem">
+      <mat-form-field style="padding-top: 4px; min-width: 180px;">
+        <mat-label>Scale</mat-label>
+        <input
+          matInput
+          type="number" min="0.001" max="15" step="0.04"
+          name="img-scale"
+          [(ngModel)]="layerListService.getSelectedLayer().drawData.details.placeImageTool.size"
+          (change)="procDraw();"
+        />
+      </mat-form-field>
+    </div>
+
+  </div>
+
+
+
+</div>
+

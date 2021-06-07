@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AssetHandlerService } from 'src/app/core/data-transfers/windows/asset-handler.service';
-import { AssetDetailEntity } from 'src/app/core/entities/main/windows/asset-detail-entity';
 
 @Component({
   selector: 'app-asset-window',

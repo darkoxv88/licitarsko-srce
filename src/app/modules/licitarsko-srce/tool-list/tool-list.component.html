@@ -6,7 +6,7 @@
 
     <button 
     mat-icon-button matTooltip="None" [matTooltipPosition]="'right'"
-    (click)="selectedToolService.selectTool('testTool');"
+    (click)="selectedToolService.selectTool('testTool'); selectedGroup = 0;"
     [color]="(selectedToolService.selected === 'testTool') ? 'primary' : null"
     >
       <mat-icon>remove_circle_outline</mat-icon>
@@ -14,7 +14,7 @@
 
     <button 
     mat-icon-button matTooltip="Move tool" [matTooltipPosition]="'right'"
-    (click)="selectedToolService.selectTool('moveTool');"
+    (click)="selectedToolService.selectTool('moveTool'); selectedGroup = 0;"
     [color]="(selectedToolService.selected === 'moveTool') ? 'primary' : null"
     >
       <mat-icon>near_me</mat-icon>
@@ -22,7 +22,7 @@
 
     <button 
       mat-icon-button matTooltip="Color picker" [matTooltipPosition]="'right'"
-      (click)="selectedToolService.selectTool('colorPickerTool');"
+      (click)="selectedToolService.selectTool('colorPickerTool'); selectedGroup = 0;"
       [color]="(selectedToolService.selected === 'colorPickerTool') ? 'primary' : null"
     >
       <mat-icon>colorize</mat-icon>
@@ -34,13 +34,26 @@
 
     <div>
 
+      <button mat-icon-button [matMenuTriggerFor]="pencileListMenu" [color]="(selectedGroup === 1) ? 'primary' : null">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <mat-menu #pencileListMenu="matMenu">
+        <button 
+          mat-menu-item matTooltip="Pencil tool" [matTooltipPosition]="'right'" 
+          (click)="selectedToolService.selectTool('pencileTool'); selectedGroup = 1;"
+        >
+          Pencil tool
+        </button>
+      </mat-menu>
+
       <button 
-      mat-icon-button matTooltip="Pencil tool" [matTooltipPosition]="'right'"
-      (click)="selectedToolService.selectTool('pencileTool');"
-      [color]="(selectedToolService.selected === 'pencileTool') ? 'primary' : null"
-    >
-      <mat-icon>edit</mat-icon>
-    </button>
+        mat-icon-button matTooltip="Place selected image" [matTooltipPosition]="'right'"
+        (click)="selectedToolService.selectTool('placeImageTool'); selectedGroup = 0;"
+        [color]="(selectedToolService.selected === 'placeImageTool') ? 'primary' : null"
+      >
+        <mat-icon>add_to_photos</mat-icon>
+      </button>
 
     </div>
 

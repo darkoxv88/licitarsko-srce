@@ -5,6 +5,7 @@ import { LayerListService } from 'src/app/core/p5/layer-list.service';
 import { MatDialogGeneratorService } from 'src/app/core/shared/mat-dialog-generator.service';
 import { LayersWindowNewLayerComponent } from './layers-window-new-layer/layers-window-new-layer.component';
 import { CreateLayerEntity } from 'src/app/core/entities/main/layer/create-layer-entity';
+import { P5DrawSemaphoreService } from 'src/app/core/p5/p5-draw-semaphore.service';
 
 @Component({
   selector: 'app-layers-window',
@@ -14,6 +15,7 @@ import { CreateLayerEntity } from 'src/app/core/entities/main/layer/create-layer
 export class LayersWindowComponent {
 
   constructor(
+    private p5DrawSemaphoreService: P5DrawSemaphoreService,
     private matDialogGeneratorService: MatDialogGeneratorService,
     private changeDetectorRef: ChangeDetectorRef,
     public layerListService: LayerListService) { 
@@ -25,6 +27,7 @@ export class LayersWindowComponent {
       this.invertIndex(event.currentIndex)
     );
 
+    this.p5DrawSemaphoreService.draw();
     this.changeDetectorRef.detectChanges();
   }
 
@@ -42,7 +45,7 @@ export class LayersWindowComponent {
     }, LayersWindowNewLayerComponent, null);
   }
 
-  public rename(): void {
-
+  public procDraw(): void {
+    this.p5DrawSemaphoreService.draw();
   }
 }
