@@ -15,6 +15,7 @@ import { IToolOnMouseDoubleClicked } from 'src/app/interfaces/tools/i-tool-on-mo
 import { IToolOnMouseWheel } from 'src/app/interfaces/tools/i-tool-on-mouse-wheel';
 import { IToolOnMousePressedLeft } from 'src/app/interfaces/tools/i-tool-on-mouse-pressed-left';
 import { IToolOnMouseDraggedLeft } from 'src/app/interfaces/tools/i-tool-on-mouse-dragged-left';
+import { IToolOnMouseReleasedLeft } from 'src/app/interfaces/tools/i-tool-on-mouse-released-left';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,6 @@ export class LayerControllerService {
     graphicsRefresh.bezierVertex(0.95*size, 0.4*size, 0.65*size, 0.85*size, 0.5*size, 0.95*size);
     graphicsRefresh.endShape();
 
-    //graphics.tint(1, 1, 1, 255); // za HSl colorMode
     graphics.image(graphicsRefresh, 0, 0, size, size);
 
     this.layerListService.iterate((item: LayerDataEntity, selected: boolean) => {
@@ -69,7 +69,7 @@ export class LayerControllerService {
 
       if (!item.show) return;
 
-      graphics.translate(item.drawData.x*scale, item.drawData.y*scale);
+      graphicsRefresh.translate(item.drawData.x*scale, item.drawData.y*scale);
 
       const event: any = this.toolHandlerService.getTool<IToolOnDraw>(item.drawData.tool);
 
@@ -84,9 +84,10 @@ export class LayerControllerService {
 
       }
 
+      graphics.colorMode(graphics.RGB);
       graphics.tint(255, item.drawData.transparency);
       graphics.image(graphicsRefresh, 0, 0, size, size);
-      graphics.tint(255, 255); // Reset transparency
+      graphics.tint(255, 255);
 
       graphicsRefresh.reset();
       graphics.reset();
@@ -166,6 +167,25 @@ export class LayerControllerService {
   public onMouseDraggedCenter = tryCatch((data: MouseDataEntity): void => {
     
   }, this.onError);
+
+
+
+  public onMouseReleasedLeft = tryCatch((data: MouseDataEntity): void => {
+    const event: IToolOnMouseReleasedLeft = this.toolHandlerService.getTool<IToolOnMouseReleasedLeft>(this.selectedToolService.selected);
+
+    if (typeof(event?.onMouseReleasedLeft) !== 'function') return;
+
+    event.onMouseReleasedLeft(data, this.layerListService.getSelectedLayer()?.drawData);
+  }, this.onError);
+
+  public onMouseReleasedRight = tryCatch((data: MouseDataEntity): void => {
+    
+  }, this.onError);
+
+  public onMouseReleasedCenter = tryCatch((data: MouseDataEntity): void => {
+    
+  }, this.onError);
+
 
 
   public onKeyPressed = tryCatch((key: string, code: number): void => {

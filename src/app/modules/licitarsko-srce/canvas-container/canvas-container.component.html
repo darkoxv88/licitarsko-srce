@@ -32,6 +32,14 @@
     <div class="app-mat-tab-inline">
       <nav mat-tab-nav-bar mat-align-tabs="center" [backgroundColor]="undefined">
         <div class="footer">
+
+          <span class="space">
+            <button mat-mini-fab [color]="'primary'" matTooltip="Redraw" [matTooltipPosition]="'above'" (click)="refresh()">
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </span>
+
+          <span class="space"></span>
   
           <span class="space">
             <button mat-raised-button color="primary" (click)="setZoom(1.25)">
@@ -59,7 +67,15 @@
               />
             </mat-form-field>
           </span>
-  
+
+          <span class="space"></span>
+
+          <span class="space"></span>
+          <span class="space"> X: {{ getHoverX() }}</span>
+
+          <span class="space"></span>
+          <span class="space"> Y: {{ getHoverY() }}</span>
+
         </div>
       </nav>
     </div>

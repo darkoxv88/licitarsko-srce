@@ -5,6 +5,7 @@ import { ProjectSaveEntity } from '../entities/main/project-save-entity';
 import { MatSnackBarService } from '../shared/mat-snack-bar.service';
 import { LoadProjectService } from '../project/load-project.service';
 import { SaveProjectService } from '../project/save-project.service';
+import { P5DrawSemaphoreService } from '../p5/p5-draw-semaphore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class CurrentProjectService {
 
   constructor(
       private loadProjectService: LoadProjectService,
+      private p5DrawSemaphoreService: P5DrawSemaphoreService,
       private saveProjectService: SaveProjectService,
       private matSnackBarService: MatSnackBarService) {
     this._active = false;
@@ -44,6 +46,21 @@ export class CurrentProjectService {
       this._active = true;
       this.onCreateSubject.next();
       this.matSnackBarService.openSnackBar('Loaded project: ' + this._name, 'neutral', 'Close')
+    });
+    this.loadProjectService.onLoadEnd().subscribe(() => {
+      setTimeout(() => {
+        this.p5DrawSemaphoreService.draw();
+
+        setTimeout(() => {
+          this.p5DrawSemaphoreService.draw();
+
+          setTimeout(() => { 
+            this.p5DrawSemaphoreService.draw(); 
+
+            setTimeout(() => { this.p5DrawSemaphoreService.draw(); }, 500);
+          }, 250);
+        },250);
+      },250);
     });
     this.saveProjectService.onSave().subscribe((data: ProjectSaveEntity) => {
       data.name = this._name;

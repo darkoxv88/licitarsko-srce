@@ -4,6 +4,7 @@ import { LayerControllerService } from './layer-controller.service';
 import { RandomGenerator } from './../../utilities/random-generator';
 import { P5Utility } from './../../utilities/p5-utility';
 import { MouseDataEntity } from './../entities/main/mouse-data-entity';
+import { P5DrawSemaphoreService } from './p5-draw-semaphore.service';
 
 import { environment } from './../../../environments/environment';
 
@@ -20,6 +21,15 @@ export class P5Service {
   private canvasView: HTMLCanvasElement;
 
   private _canInteract: boolean;
+  private _hx: number;
+  public get hx(): number {
+    return this._hx;
+  }
+
+  private _hy: number;
+  public get hy(): number {
+    return this._hy;
+  }
 
   public get isViewSet(): boolean {
     return !!this.canvasView;
@@ -39,7 +49,7 @@ export class P5Service {
     return this.zoomSubject.value;
   }
 
-  constructor(private layerControllerService: LayerControllerService) {
+  constructor(private layerControllerService: LayerControllerService, private p5DrawSemaphoreService: P5DrawSemaphoreService) {
     this._p5 = p5;
     this.onCreateSubject = new Subject<HTMLCanvasElement>();
     this.destroySubject = new Subject<null>();
@@ -47,6 +57,8 @@ export class P5Service {
     this.saveSubject = new Subject<string>();
     this.onDestroySubject = new Subject<null>();
     this._canInteract = false;
+    this._hx = 0;
+    this._hy = 0;
   }
 
   public enableInteraction(): void {
@@ -76,6 +88,7 @@ export class P5Service {
         s.resizeCanvas(size, size);
         pg = s.createGraphics(size, size);
         pgRefreshed = s.createGraphics(size, size);
+        this.p5DrawSemaphoreService.draw();
       });
 
       const saveSub: Subscription = this.saveSubject.asObservable().subscribe((lName: string) => {
@@ -90,6 +103,7 @@ export class P5Service {
           s.resizeCanvas(size, size);
           pg = s.createGraphics(size, size);
           pgRefreshed = s.createGraphics(size, size);
+          this.p5DrawSemaphoreService.draw();
         }
       });
 
@@ -111,16 +125,25 @@ export class P5Service {
 
         s.image(pg, 0, 0, size, size);
 
+        this.p5DrawSemaphoreService.draw();
+
         this.onCreateSubject.next(this.canvasView);
       };
 
       s.draw = () => {
+        const drawForSave: boolean = (typeof(saveProc) === 'function');
+        const shouldDraw: boolean = this.p5DrawSemaphoreService.shouldDraw();
+
+        if (shouldDraw == false && drawForSave == false) return;
+
         s.clear();
         s.background(0, 0, 0, 0);
 
-        const drawForSave: boolean = (typeof(saveProc) === 'function');
+        const lScale: number = drawForSave ? 1 : scale
 
-        this.layerControllerService.onDraw(s, pg, pgRefreshed, ctx, size, scale, drawForSave);
+        this.layerControllerService.onDraw(s, pg, pgRefreshed, ctx, size, lScale, drawForSave);
+
+        this.p5DrawSemaphoreService.drawn();
 
         if (drawForSave) {
           if (s.height == size && s.width == size) {
@@ -131,6 +154,9 @@ export class P5Service {
       };
 
       s.mouseMoved = () => {
+        this._hx = s.mouseX;
+        this._hy = s.mouseY;
+
         if (!this._canInteract) return;
         
         this.layerControllerService.onMouseMove({
@@ -150,6 +176,8 @@ export class P5Service {
           mpInView: P5Utility.checkIfClickIn(s.pmouseX, s.pmouseY, size),
           px: s.pmouseX, py: s.pmouseY, mx: s.movedX, my: s.movedY, scale: scale
         });
+
+        this.p5DrawSemaphoreService.draw();
       }
 
       s.doubleClicked = () => {
@@ -161,6 +189,8 @@ export class P5Service {
           mpInView: P5Utility.checkIfClickIn(s.pmouseX, s.pmouseY, size),
           px: s.pmouseX, py: s.pmouseY, mx: s.movedX, my: s.movedY, scale: scale
         });
+
+        this.p5DrawSemaphoreService.draw();
       }
 
       s.mousePressed = () => {
@@ -216,14 +246,16 @@ export class P5Service {
         };
 
         if (s.mouseButton === s.LEFT) {
-          
+          this.layerControllerService.onMouseReleasedLeft(lData);
         }
         if (s.mouseButton === s.RIGHT) {
-          
+          this.layerControllerService.onMouseReleasedRight(lData);
         }
         if (s.mouseButton === s.CENTER) {
-          
+          this.layerControllerService.onMouseReleasedCenter(lData);
         }
+
+        this.p5DrawSemaphoreService.draw();
       };
 
       s.mouseWheel = (ev) => {
@@ -248,12 +280,16 @@ export class P5Service {
         if (!this._canInteract) return;
 
         this.layerControllerService.onKeyPressed(s.key, s.keyCode);
+
+        this.p5DrawSemaphoreService.draw();
       };
 
       s.keyReleased = () => {
         if (!this._canInteract) return;
 
         this.layerControllerService.onKeyReleased(s.key, s.keyCode);
+
+        this.p5DrawSemaphoreService.draw();
       }
 
       const destroySub: Subscription = this.destroySubject.asObservable().subscribe(() => {

@@ -5,15 +5,18 @@ import { IToolOnMouseDraggedLeft } from 'src/app/interfaces/tools/i-tool-on-mous
 
 import { LayerDrawEntity } from '../../entities/main/layer/layer-draw-entity';
 import { MouseDataEntity } from '../../entities/main/mouse-data-entity';
-
-import { SelectedToolService } from '../selected-tool.service';
+import { P5DrawSemaphoreService } from '../p5-draw-semaphore.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoveToolService implements IToolOnMouseDoubleClicked, IToolOnMouseDraggedLeft {
 
-  constructor() { }
+  private tick: number;
+
+  constructor(private p5DrawSemaphoreService: P5DrawSemaphoreService) { 
+    this.tick = 0;
+  }
 
   public onMouseDoubleClicked(obj: MouseDataEntity, toolData: LayerDrawEntity): void {
     if (!toolData) return;
@@ -29,6 +32,14 @@ export class MoveToolService implements IToolOnMouseDoubleClicked, IToolOnMouseD
 
     toolData.x = toolData.x + (obj.mx / obj.scale);
     toolData.y = toolData.y + (obj.my / obj.scale);
+
+    this.tick = this.tick + 1;
+
+    if (this.tick >= 15) {
+      this.tick = 0;
+      
+      this.p5DrawSemaphoreService.draw();
+    }
   }
 
 }

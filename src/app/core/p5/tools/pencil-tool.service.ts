@@ -10,18 +10,22 @@ import { MouseDataEntity } from '../../entities/main/mouse-data-entity';
 import { RgbaColorEntity } from '../../entities/other/rgba-color-entity';
 import { PaletteSettingsService } from '../../data-transfers/windows/palette-settings.service';
 import { PencileDrawDataEntity } from '../../entities/main/tools/pencile-draw-data-entity';
+import { P5DrawSemaphoreService } from '../p5-draw-semaphore.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PencileToolService implements IToolOnDraw, IToolOnMousePressedLeft, IToolOnMouseDraggedLeft {
 
-  constructor(private paletteSettingsService: PaletteSettingsService) { }
+  private tick: number;
+
+  constructor(private paletteSettingsService: PaletteSettingsService, private p5DrawSemaphoreService: P5DrawSemaphoreService) { 
+    this.tick = 0;
+  }
 
   public onDraw(
     g: any, gRef: any, ctx: CanvasRenderingContext2D, size: number, scale: number, drawForSave: boolean, toolData: LayerDrawEntity
   ): void {
-    
     if (!toolData.details['list']) return;
 
     for (let i = 0; i < toolData.details['list'].length; i++) {
@@ -35,7 +39,8 @@ export class PencileToolService implements IToolOnDraw, IToolOnMousePressedLeft,
 
   private _canAction(toolData: LayerDrawEntity): boolean {
     if (!toolData.tool) {
-      toolData.tool = 'pencileTool'
+      toolData.tool = 'pencileTool';
+      toolData.toolName = 'Pencile tool';
     }
 
     if (toolData.tool !== 'pencileTool') {
@@ -47,7 +52,7 @@ export class PencileToolService implements IToolOnDraw, IToolOnMousePressedLeft,
 
   private _sharedAction(obj: MouseDataEntity, toolData: LayerDrawEntity): void {
     if (this._canAction(toolData) !== true) return;
-
+    
     if (!toolData.details['list']) toolData.details['list'] = new Array<PencileDrawDataEntity>();
 
     if (obj.mInView == false) return;
@@ -70,6 +75,14 @@ export class PencileToolService implements IToolOnDraw, IToolOnMousePressedLeft,
 
   public onMouseDraggedLeft(obj: MouseDataEntity, toolData: LayerDrawEntity): void {
     this._sharedAction(obj, toolData);
+
+    this.tick = this.tick + 1;
+
+    if (this.tick >= 20) {
+      this.tick = 0;
+      
+      this.p5DrawSemaphoreService.draw();
+    }
   }; 
 
 }

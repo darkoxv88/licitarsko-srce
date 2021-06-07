@@ -32,4 +32,14 @@
     <input #appLoadAssetFileInput type="file" accept="{{selectedValue}}" (change)="loadAsset($event)" hidden>
   
   </div>
+
+  <div style="width: 100%; margin-top: 0.75rem;" *ngIf="msg !== null && msg === ''">
+    <mat-spinner style="margin-right: auto; margin-left: auto;" [diameter]="50"></mat-spinner>
+  </div>
+
+  <div style="margin-top: 0.75rem;">
+    <p *ngIf="msg !== null && msg !== ''">
+      {{ msg }}
+      </p>
+  </div>
 </div>

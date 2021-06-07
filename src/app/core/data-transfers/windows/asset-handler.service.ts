@@ -89,11 +89,11 @@ export class AssetHandlerService {
           url: img.src,
         });
 
-        this.assetsList['name'] = image;
+        this.assetsList[name] = image;
 
         this._selected = index - 1;
 
-        (tryCatch(onDone, (err: any) => { console.error(err) }))();
+        (tryCatch(onDone, (err: any) => { console.error(err) }))(name);
       }); 
     });
   }
