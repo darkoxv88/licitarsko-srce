@@ -4,7 +4,7 @@ export class SafeJson {
       return JSON.stringify(data);
     } catch(err) { }
 
-    return 'null';
+    return '';
   }
 
   public static decode<T>(data: string): T {

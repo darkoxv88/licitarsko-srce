@@ -40,10 +40,17 @@
 
       <mat-menu #pencileListMenu="matMenu">
         <button 
-          mat-menu-item matTooltip="Pencil tool" [matTooltipPosition]="'right'" 
+          mat-menu-item
           (click)="selectedToolService.selectTool('pencileTool'); selectedGroup = 1;"
         >
           Pencil tool
+        </button>
+
+        <button 
+          mat-menu-item 
+          (click)="selectedToolService.selectTool('penTool'); selectedGroup = 1;"
+        >
+          Pen tool
         </button>
       </mat-menu>
 

@@ -20,4 +20,10 @@ export class TestToolService implements IToolOnDraw {
     
   }
 
+  onDrawControlPoint(
+    g: any, gRef: any, ctx: CanvasRenderingContext2D, size: number, scale: number, drawForSave: boolean, toolData: LayerDrawEntity
+  ): void {
+    
+  }
+
 }

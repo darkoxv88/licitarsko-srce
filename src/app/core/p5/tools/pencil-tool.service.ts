@@ -37,6 +37,10 @@ export class PencileToolService implements IToolOnDraw, IToolOnMousePressedLeft,
     }
   }
 
+  onDrawControlPoint(
+    g: any, gRef: any, ctx: CanvasRenderingContext2D, size: number, scale: number, drawForSave: boolean, toolData: LayerDrawEntity
+  ): void { }
+
   private _canAction(toolData: LayerDrawEntity): boolean {
     if (!toolData.tool) {
       toolData.tool = 'pencileTool';

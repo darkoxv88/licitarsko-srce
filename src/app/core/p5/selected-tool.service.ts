@@ -5,22 +5,18 @@ import { Injectable } from '@angular/core';
 })
 export class SelectedToolService {
 
-  private selectedTool: 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool';
-
-
+  private selectedTool: 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool' | 'penTool';
 
   constructor() { 
     this.selectedTool = 'testTool';
   }
 
-
-
-  public get selected(): 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool' {
+  public get selected(): 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool' | 'penTool' {
     return this.selectedTool;
   }
 
   public selectTool(
-    name: 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool'
+    name: 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool' | 'penTool'
   ) {
     this.selectedTool = name
   }

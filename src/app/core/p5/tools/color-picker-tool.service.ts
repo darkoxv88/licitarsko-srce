@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { IToolBasic } from 'src/app/interfaces/tools/i-tool-basic';
 import { IToolOnMouseMove } from 'src/app/interfaces/tools/i-tool-on-mouse-move';
 import { IToolOnMouseClicked } from 'src/app/interfaces/tools/i-tool-on-mouse-clicked';
 
@@ -13,7 +14,7 @@ import { ColorHandlers } from 'src/app/utilities/color-handlers';
 @Injectable({
   providedIn: 'root'
 })
-export class ColorPickerToolService implements IToolOnMouseMove, IToolOnMouseClicked {
+export class ColorPickerToolService implements IToolBasic, IToolOnMouseMove, IToolOnMouseClicked {
 
   private _hoverColor: string;
   public get hoverColor(): string {
@@ -23,6 +24,8 @@ export class ColorPickerToolService implements IToolOnMouseMove, IToolOnMouseCli
   constructor(private paletteSettingsService: PaletteSettingsService) {
     this._hoverColor = '#000000'
   }
+
+  public clear(): void { };
 
   public onMouseMove(obj: MouseDataEntity, toolData: LayerDrawEntity): void {
     if (obj.mInView) {

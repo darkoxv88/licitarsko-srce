@@ -1,3 +1,4 @@
+import { IToolOnDrawControlPoints } from './../../interfaces/tools/i-tool-on-draw-control-points';
 import { Injectable } from '@angular/core';
 import { LayerListService } from './layer-list.service';
 import { tryCatch } from 'src/app/utilities/wrappers';
@@ -16,6 +17,7 @@ import { IToolOnMouseWheel } from 'src/app/interfaces/tools/i-tool-on-mouse-whee
 import { IToolOnMousePressedLeft } from 'src/app/interfaces/tools/i-tool-on-mouse-pressed-left';
 import { IToolOnMouseDraggedLeft } from 'src/app/interfaces/tools/i-tool-on-mouse-dragged-left';
 import { IToolOnMouseReleasedLeft } from 'src/app/interfaces/tools/i-tool-on-mouse-released-left';
+import { IToolOnKeyPressed } from 'src/app/interfaces/tools/i-tool-on-key-pressed';
 
 @Injectable({
   providedIn: 'root'
@@ -80,8 +82,13 @@ export class LayerControllerService {
         );
       }
 
-      if (!drawForSave) {
-
+      if (!drawForSave && selected) {
+        if (typeof(event?.onDrawControlPoints) === 'function') {
+          event.onDrawControlPoints(
+            graphics, graphicsRefresh, 
+            ctx, size, scale, drawForSave, item.drawData
+          );
+        }
       }
 
       graphics.colorMode(graphics.RGB);
@@ -189,7 +196,11 @@ export class LayerControllerService {
 
 
   public onKeyPressed = tryCatch((key: string, code: number): void => {
-    
+    const event: IToolOnKeyPressed = this.toolHandlerService.getTool<IToolOnKeyPressed>(this.selectedToolService.selected);
+
+    if (typeof(event?.onKeyPressed) !== 'function') return;
+
+    event.onKeyPressed(key, code);
   }, this.onError);
 
   public onKeyReleased = tryCatch((key: string, code: number): void => {
