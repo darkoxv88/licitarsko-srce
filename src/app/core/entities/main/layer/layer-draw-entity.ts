@@ -1,6 +1,6 @@
 export class LayerDrawEntity {
 
-  public tool: 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool';
+  public tool: 'testTool' | 'colorPickerTool' | 'moveTool' | 'pencileTool' | 'placeImageTool' | 'penTool';
   public toolName: string;
   public points: Array<number>;
   public details: any;

@@ -20,7 +20,6 @@ import { LayersWindowNewLayerComponent } from './control-windows/layers-window/l
 import { SelectedLayerWindowComponent } from './control-windows/selected-layer-window/selected-layer-window.component';
 import { ToolSettingsHolderComponent } from './control-windows/tool-settings-holder/tool-settings-holder.component';
 import { MoveToolComponent } from './tool-list/move-tool/move-tool.component';
-import { PencileToolComponent } from './tool-list/pencile-tool/pencile-tool.component';
 
 @NgModule({
   imports: [
@@ -46,7 +45,6 @@ import { PencileToolComponent } from './tool-list/pencile-tool/pencile-tool.comp
     SelectedLayerWindowComponent,
     ToolSettingsHolderComponent,
     MoveToolComponent,
-    PencileToolComponent,
   ],
   entryComponents: [ 
     AboutComponent,
@@ -63,7 +61,6 @@ import { PencileToolComponent } from './tool-list/pencile-tool/pencile-tool.comp
     SelectedLayerWindowComponent,
     ToolSettingsHolderComponent,
     MoveToolComponent,
-    PencileToolComponent,
   ],
   exports: [ ],
 })

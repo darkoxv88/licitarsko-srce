@@ -88,7 +88,7 @@ export class AppThemeService {
     this.setTheme(this.theme);
   }
 
-  public subFunc(): Observable<null> {
+  public onThemeChange(): Observable<null> {
     return this.eventVar.asObservable();
   }
 

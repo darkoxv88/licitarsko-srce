@@ -31,17 +31,21 @@ export class PlaceImageToolService implements IToolOnDraw, IToolOnMouseDoubleCli
   ): void {
     const data: PlaceImageDataEntity = toolData.details.placeImageTool;
 
-    if (!data?.draw) return;
+    const img: any = this.assetHandlerService.getImageByName(data?.draw);
+
+    if (!img) return;
 
     gRef.colorMode(gRef.HSB);
     gRef.tint(data.h, data.s, data.b, 255);
 
-    const img: any = this.assetHandlerService.getImageByName(data.draw);
-    
     gRef.image(img, 0, 0, img?.width*data.size*scale, img?.height*data.size*scale)
 
     gRef.colorMode(gRef.RGB);
   }
+
+  public onDrawControlPoint(
+    g: any, gRef: any, ctx: CanvasRenderingContext2D, size: number, scale: number, drawForSave: boolean, toolData: LayerDrawEntity
+  ): void { }
 
   public onMouseDoubleClicked(obj: MouseDataEntity, toolData: LayerDrawEntity): void {
     const img = this.assetHandlerService.getSelectedName();

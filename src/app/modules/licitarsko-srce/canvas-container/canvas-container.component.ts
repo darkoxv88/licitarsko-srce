@@ -5,6 +5,7 @@ import { CurrentProjectService } from 'src/app/core/data-transfers/current-proje
 import { RandomGenerator } from 'src/app/utilities/random-generator';
 import { P5Service } from 'src/app/core/p5/p5.service';
 import { P5DrawSemaphoreService } from 'src/app/core/p5/p5-draw-semaphore.service';
+import { AppThemeService } from 'src/app/app-theme.service';
 
 @Component({
   selector: 'app-canvas-container',
@@ -17,8 +18,9 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
 
   public containerID: string;
 
-  public onCanvasCreateSubscription: Subscription;
+  private onCanvasCreateSubscription: Subscription;
   private onCanvasDestroySubscription: Subscription;
+  private onThemeChangeSubscription: Subscription;
   private focused: boolean;
 
   public zoomRatio: number;
@@ -27,6 +29,7 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
   private canvas: HTMLCanvasElement;
 
   constructor(
+      private appThemeService: AppThemeService,
       private renderer: Renderer2,
       private p5Service: P5Service,
       private p5DrawSemaphoreService: P5DrawSemaphoreService,
@@ -53,6 +56,10 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
 
     this.onCanvasDestroySubscription = this.p5Service.onDestroy().subscribe(() => {
       this.canvas = null;
+    });
+
+    this.onThemeChangeSubscription = this.appThemeService.onThemeChange().subscribe(() => {
+      this.p5DrawSemaphoreService.draw();
     });
 
     document.addEventListener('keydown', this.keydownEvent);
@@ -86,6 +93,7 @@ export class CanvasContainerComponent implements OnInit, AfterViewInit, AfterVie
 
     this.onCanvasCreateSubscription?.unsubscribe();
     this.onCanvasDestroySubscription?.unsubscribe();
+    this.onThemeChangeSubscription?.unsubscribe();
 
     document.removeEventListener('keydown', this.keydownEvent);
     document.removeEventListener('keyup', this.keyupEvent);
